@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+  joomla:
+    image: joomla
+    restart: always
+    depends_on:
+      - joomladb
+    links:
+      - joomladb:mysql
+    ports:
+      - 8081:80
+    environment:
+      JOOMLA_DB_HOST: joomladb
+      JOOMLA_DB_PASSWORD: redhat
+      JOOMLA_DB_USER: mukund
+      JOOMLA_DB_NAME: joomladb
+
+  joomladb:
+    image: mysql:5.6
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: redhat
+      MYSQL_DATABASE: joomladb
+      MYSQL_USER: mukund
+      MYSQL_PASSWORD: redhat
+    volumes:
+      - joomladb:/var/lib/mysql
+
+volumes:
+        joomladb:      
